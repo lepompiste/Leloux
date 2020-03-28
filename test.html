@@ -8,11 +8,38 @@
 	<title>Leloux</title>
 </head>
 <body>
-	<div id="view"></div>
+	<div id="view">cvbcvb</div>
+	<div id="view2">cvbcvb</div>
+	<div id="view3">cvbcvb</div>
 
 	<script>
-		var element = l("h1", {"id": "mon_id"}, "MON TITRE")
-		l.render(document.getElementById("view"), element)
+		var globalCounter = 0
+
+		Counter2 = {
+			view: function() {
+				return l("p", {},
+					l("button", {events: {
+						"click": function() {
+							globalCounter++
+							l.redrawAll()
+						}
+					}}, "ajouter"),
+					globalCounter + " clicks"
+				)
+			}
+		}
+		l.mount(document.getElementById("view2"), Counter2)
+
+		App = {
+			view: function() {
+				return l("p", {}, "AHAHAH")
+			}
+		}
+
+		l.routes.def(document.getElementById("view"), "/", {
+			"/": Counter2,
+			"/app": App
+		})
 	</script>
 </body>
 </html>
