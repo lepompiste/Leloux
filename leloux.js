@@ -120,8 +120,8 @@ function(){
 			routes.init()
 		},
 
-		goto: function(path) {
-			window.location.hash = routes.symbol + path
+		goto: function(route, param) {
+			window.location.hash = routes.symbol + route + (param != undefined ? (routes.paramSymbol + param) : "")
 		},
 
 		resolve: function() {
@@ -164,8 +164,12 @@ function(){
 	var requests = {
 		make: function(mode, url, props, isJSON) {
 			return new Promise((resolve, reject) => {
+				ps = ""
+				if (props.query) {
+					ps = new URLSearchParams(props.query)
+				}
 				let xhr = new XMLHttpRequest();
-				xhr.open(mode, url);
+				xhr.open(mode, url + (props.query ? "?" : "") + ps.toString());
 				if (props.headers) {
 					Object.keys(props.headers).forEach(key => {
 						xhr.setRequestHeader(key, props.headers[key]);
