@@ -157,3 +157,30 @@ l.requests.makej("GET", "./api/test", {
 })
 ```
 
+
+
+Example using route and requests :
+
+```javascript
+var Component = {
+    init: () => {
+        m.requests.makej("GET", "/api/getText", {
+            token: token
+        })
+        .then(data => {
+            l.renderElement(document.getElementById("test_section"), l("p", {}, data.r))
+        })
+    },
+    view: () => {
+        return [
+            l("h1", {}, "title"),
+            l("section", {id: "test_section"}, "")
+        ]
+    }
+}
+
+l.routes.def(MOUNTPOINT, "/", {
+    "/": Component
+})
+```
+

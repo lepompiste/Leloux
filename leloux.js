@@ -25,27 +25,33 @@ function(){
 	}
 
 	function renderElement(container, element) {
-		const vdom = element.type == "TEXT_ELEMENT" ? document.createTextNode(element.props.nodeValue) : document.createElement(element.type)
+		if (Array.isArray(element)) {
+			element.forEach(el => {
+				renderElement(container, el)
+			})
+		} else {
+			const vdom = element.type == "TEXT_ELEMENT" ? document.createTextNode(element.props.nodeValue) : document.createElement(element.type)
 		
-		Object.keys(element.props).forEach(name => {
-			if (name != "children") {
-				if (name == "events") {
-					Object.keys(element.props.events).forEach(eventName => {
-						vdom.addEventListener(eventName, element.props.events[eventName])
-					})
-				} else if (name != "nodeValue") {
-					vdom.setAttribute(name, element.props[name])
-				} else {
-					vdom[name] = element.props[name]
+			Object.keys(element.props).forEach(name => {
+				if (name != "children") {
+					if (name == "events") {
+						Object.keys(element.props.events).forEach(eventName => {
+							vdom.addEventListener(eventName, element.props.events[eventName])
+						})
+					} else if (name != "nodeValue") {
+						vdom.setAttribute(name, element.props[name])
+					} else {
+						vdom[name] = element.props[name]
+					}
 				}
-			}
-		})
+			})
 
-		element.props.children.forEach(child => {
-			renderElement(vdom, child)
-		});
+			element.props.children.forEach(child => {
+				renderElement(vdom, child)
+			});
 
-		container.appendChild(vdom)
+			container.appendChild(vdom)
+		}
 	}
 
 	function render(container, component) {
