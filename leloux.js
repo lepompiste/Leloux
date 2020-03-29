@@ -101,7 +101,6 @@ function(){
 
 		load: function(route) {
 			if (route === null) {
-				console.log("ici")
 				render(routes.mountpoint, {view:function(){return l("p",{},"404 error")}})
 			} else if (route === undefined) {
 				if (routes.routes[routes.defaultRoute] != undefined) {
