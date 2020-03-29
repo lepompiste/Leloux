@@ -33,6 +33,9 @@ function(){
 					Object.keys(element.props.events).forEach(eventName => {
 						vdom.addEventListener(eventName, element.props.events[eventName])
 					})
+				} else if (name != "nodeValue") {
+					console.log(vdom)
+					vdom.setAttribute(name, element.props[name])
 				} else {
 					vdom[name] = element.props[name]
 				}
