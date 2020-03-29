@@ -105,7 +105,7 @@ function(){
 				render(routes.mountpoint, {view:function(){return l("p",{},"404 error")}})
 			} else if (route === undefined) {
 				if (routes.routes[routes.defaultRoute] != undefined) {
-					routes.load(routes.defaultRoute)
+					routes.goto(routes.defaultRoute) // no need to check for param, because if there is not route provided, there is no param
 				}
 			} else if (routes.routes[route] != undefined) {
 				if (routes.mount) {
