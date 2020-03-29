@@ -96,7 +96,7 @@ function(){
 		getParam: function () {
 			split = window.location.hash.split(routes.paramSymbol)
 			param = split.length > 2 ? split.slice(2).join(routes.paramSymbol) : ""
-			return param
+			return decodeURI(param)
 		},
 
 		load: function(route) {
