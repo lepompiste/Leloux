@@ -111,7 +111,9 @@ l.routes.goto(ROUTE, PARAM) // go to the specified route, using the optional PAR
 
 By default, components are mounted to the MOUNTPOINT, but you can make it just rendered to preserve performances, by changing `l.routes.mount` to `false`.
 
-You can also change the symbols of routes (default "#!") and parameter (default "!")
+You can also change the symbols of routes (default "#!") and parameter (default "!").
+
+All those parameters have to be changed (or not) before the call to `l.routes.def`
 
 
 
