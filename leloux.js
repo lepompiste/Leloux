@@ -177,6 +177,9 @@ function(){
 				}
 				let xhr = new XMLHttpRequest();
 				xhr.open(mode, url + (props.query ? "?" : "") + ps.toString());
+
+				xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // default, can be overriden by props.headers
+
 				if (props.headers) {
 					Object.keys(props.headers).forEach(key => {
 						xhr.setRequestHeader(key, props.headers[key]);
@@ -194,7 +197,13 @@ function(){
 					}
 				};
 				xhr.onerror = () => reject(xhr.statusText);
-				xhr.send(props.body);
+				bodyParts = []
+				if (props.body != undefined) {
+					Object.keys(props.body).forEach(key => {
+						bodyParts.push(key + "=" + props.body[key])
+					})
+				}
+				xhr.send(props.body != undefined ? bodyParts.join("&") : (props.bodyRaw != undefined ? props.bodyRaw : null));
 			});
 		},
 		makej: function(mode, url, props) {
