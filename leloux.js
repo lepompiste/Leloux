@@ -25,6 +25,10 @@ function(){
 	}
 
 	function renderElement(container, element) {
+		if (element == null) {
+			return
+		}
+		
 		if (Array.isArray(element)) {
 			element.forEach(el => {
 				renderElement(container, el)
