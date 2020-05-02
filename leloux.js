@@ -245,13 +245,25 @@ function(){
 				// reject if error
 				xhr.onerror = () => reject(xhr.statusText);
 
-				// body is built using FormData
-				bodyData = new FormData()
-				if (props.body != undefined) {
-					Object.keys(props.body).forEach(key => {
-						bodyData.append(key, props.body[key])
-					})
+				bodyData = null
+				if (props.body != undefined) { // body handling
+					if (props.useFormData) {// body is built using FormData
+						bodyData = new FormData()
+
+						Object.keys(props.body).forEach(key => {
+							bodyData.append(key, props.body[key])
+						})
+					} else { // body is built using default application/www-x-form-urlencoded
+						bodyParts = []
+						
+						Object.keys(props.body).forEach(key => {
+							bodyParts.push(key + "=" + encodeURIComponent(props.body[key]))
+						})
+
+						bodyData = bodyParts.join("&")
+					}
 				}
+				
 
 				xhr.send(props.body != undefined ? bodyData : (props.bodyRaw != undefined ? props.bodyRaw : null));
 			});
