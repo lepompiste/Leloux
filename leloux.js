@@ -205,16 +205,17 @@ function(){
 				let xhr = new XMLHttpRequest();
 				xhr.open(mode, url + (props.query ? "?" : "") + ps.toString());
 
-				if (props.headers['Content-type'] === undefined) {
-					xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // default, can be overriden by props.headers
-				}
-
 				if (props.headers) { // Custom headers handling
 					Object.keys(props.headers).forEach(key => {
 						if (props.headers[key] != null) { // if a header is null, it is not defined at all (useful to override content-type default without providing a new one)
 							xhr.setRequestHeader(key, props.headers[key]);
 						}
 					});
+					if (props.headers['Content-type'] === undefined) {
+						xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // default, can be overriden by props.headers
+					}
+				} else {
+					xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // default, can be overriden by props.headers
 				}
 
 				if (props.events) { // Custom xhr events handling
