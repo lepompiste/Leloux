@@ -249,7 +249,7 @@ function(){
 				bodyData = new FormData()
 				if (props.body != undefined) {
 					Object.keys(props.body).forEach(key => {
-						bodyDate.append(key, props.body[key])
+						bodyData.append(key, props.body[key])
 					})
 				}
 
