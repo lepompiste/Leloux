@@ -131,9 +131,15 @@ l.requests.make(METHOD, URL, PROPS, ISJSON) // returns a Promise
 
 `PROPS` is an object :
 
-​	`PROPS.query` are query parameters
+​	`PROPS.query` are query parameters (key : value)
 
-​	`PROPS.body` is the body of the request
+​	`PROPS.body` is the body of the request (key : value), parsed with FormData.
+
+​	`PROPS.bodyRaw` is sent if and only if `PROPS.body` is undefined. It is send as is.
+
+​	`PROPS.events` add events to the xhr request ("load", "error", ...).
+
+​	`PROPS.uploadEvents` add events while upload to the xhr requests ("progress",  ...).
 
 ​	`PROPS.headers` are the headers of the request
 
@@ -184,3 +190,39 @@ l.routes.def(MOUNTPOINT, "/", {
 })
 ```
 
+
+
+Example upload multiple files :
+
+```html
+<form action="./upload" enctype="multipart/form-data" method="POST" id="uploader">
+	<input type="file" name="uploads" multiple id="uploads">
+	<input type="submit" value="Submit">
+</form>
+	
+<script type="text/javascript" defer>
+	document.querySelector("#uploader").addEventListener("submit", function (evt) {
+		evt.preventDefault()
+
+		filesData = new FormData()
+		for (i = 0; i < document.querySelector("#uploads").files.length; i++) {
+            // Add all files to the form data under the same name
+			filesData.append("uploads", document.querySelector("#uploads").files[i])
+		}
+
+		l.requests.makej("POST", "./upload", {
+			headers: { // Content type to null to override default one. Maybe can be set as multipart/form-data but it works like this
+				"Content-type": null
+			},
+			uploadEvents: {
+				"progress": (event) => { // display progress in the console
+					console.log(event.loaded + "/" + event.total)
+				} 
+			},
+			bodyRaw: filesData
+		}).then((data) => {
+			console.log(data)
+		})
+	})
+</script>
+```
