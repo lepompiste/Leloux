@@ -133,7 +133,7 @@ l.requests.make(METHOD, URL, PROPS, ISJSON) // returns a Promise
 
 ​	`PROPS.query` are query parameters (key : value)
 
-​	`PROPS.body` is the body of the request (key : value), parsed with FormData.
+​	`PROPS.body` is the body of the request (key : value).
 
 ​	`PROPS.bodyRaw` is sent if and only if `PROPS.body` is undefined. It is send as is.
 
@@ -142,6 +142,8 @@ l.requests.make(METHOD, URL, PROPS, ISJSON) // returns a Promise
 ​	`PROPS.uploadEvents` add events while upload to the xhr requests ("progress",  ...).
 
 ​	`PROPS.headers` are the headers of the request
+
+​	`PROPS.useFormData` define if FormData is used to parse data (multipart/form-data encoding like) or not (application/www-x-form-urlencoded encoding like).
 
 `ISJSON` is a Boolean that defines whether the response should be parsed as JSON or not.
 
