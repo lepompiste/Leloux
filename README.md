@@ -206,7 +206,7 @@ Example upload multiple files :
 	document.querySelector("#uploader").addEventListener("submit", function (evt) {
 		evt.preventDefault()
 
-		filesData = new FormData()
+		var filesData = new FormData()
 		for (i = 0; i < document.querySelector("#uploads").files.length; i++) {
             // Add all files to the form data under the same name
 			filesData.append("uploads", document.querySelector("#uploads").files[i])
